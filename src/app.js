@@ -12,22 +12,38 @@ app.use(express.json());
 function CheckisOdd(req, res, next) {
 
     //Write Your Code here
+ var value = parseInt(req.query.num);
+    if( value%2 == 0 ){
+        req.query.isOdd = false;
+    }else{
+        req.query.isOdd = true;
+    }
+    next();
 
 }
 
 
-app.get('/', CheckisOdd, (req, res) => {
+//app.get('/', CheckisOdd, (req, res) => {
     
     //num in data should be replaced by num from the get request route
     //isOdd in data should be replaced by whether num is odd or even if it odd make it true else false 
-    const data = {
-        "num" : 5,
-        "isOdd": true
-    };
+    //const data = {
+        //"num" : 5,
+        //"isOdd": true
+    //};
 
+    //res.send(JSON.stringify(data));
+//});
+
+
+app.get('/', CheckisOdd, (req, res) => {
+    const data = {
+        "num" : req.query.num,
+        "isOdd" : req.query.isOdd
+    };
     res.send(JSON.stringify(data));
 });
 
 
-module.exports = app;
 
+module.exports = app;
